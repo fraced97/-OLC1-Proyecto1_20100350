@@ -193,6 +193,8 @@ namespace _OLC1_Proyecto1
                 analizar.AnalizarER();
                 analizar.reporteHtml();
                 analizar.ReporteErrores();
+                analizar.reporteTokensXML();
+                analizar.reporteErroresXML();
             }
             else
             {

@@ -88,7 +88,15 @@ namespace _OLC1_Proyecto1
                             lexema = lexema + variable;
                             //System.out.println(variable + "   ... ENTRO EN OTRO SLASH");
                         }
-                        
+                        else
+                        {
+                            lexema = lexema + variable;
+                            estadoActual = 0;
+                            listaErrores.AddLast(new ErroresLexicos(lexema, "Lexico", "Elemento desconocido", fila, columna));
+                            lexema = "";
+                        }
+
+
                         break;
                     case 5:
                         if (variable == '\n')
@@ -123,7 +131,15 @@ namespace _OLC1_Proyecto1
                             listaTokens.AddLast(new Token(Token.Tipo.EXCLAMACION, lexema, "Exclamacion", fila, columna));
                             lexema = "";
                         }
-                       
+                        else
+                        {
+                            lexema = lexema + variable;
+                            estadoActual = 0;
+                            listaErrores.AddLast(new ErroresLexicos(lexema, "Lexico", "Elemento desconocido", fila, columna));
+                            lexema = "";
+                        }
+
+
                         break;
                     case 7:
                         if (variable == '!')
@@ -143,6 +159,7 @@ namespace _OLC1_Proyecto1
                             //lexema = lexema + variable;
                         }else if (variable == ' ' || variable == '\t')
                         {
+                            lexema = lexema + variable; //UN CAMBIO AQUI
                             estadoActual = 7;
                         }
                         else
@@ -159,7 +176,15 @@ namespace _OLC1_Proyecto1
                             listaTokens.AddLast(new Token(Token.Tipo.MAYOR_QUE, lexema, "Mayor_Que", fila, columna));
                             lexema = "";
                         }
-                        
+                        else
+                        {
+                            lexema = lexema + variable;
+                            estadoActual = 0;
+                            listaErrores.AddLast(new ErroresLexicos(lexema, "Lexico", "Elemento desconocido", fila, columna));
+                            lexema = "";
+                        }
+
+
                         break;
                     case 10:
                         if (Char.IsDigit(variable))
@@ -217,8 +242,16 @@ namespace _OLC1_Proyecto1
                             lexema = "";
 
                         }
-                        
-                        
+                        else
+                        {
+                            lexema = lexema + variable;
+                            estadoActual = 0;
+                            listaErrores.AddLast(new ErroresLexicos(lexema, "Lexico", "Elemento desconocido", fila, columna));
+                            lexema = "";
+                        }
+
+
+
                         break;
                     case 12:
                         if (variable == ';')
@@ -243,12 +276,25 @@ namespace _OLC1_Proyecto1
                             lexema = lexema + variable;
                             listaTokens.AddLast(new Token(Token.Tipo.COMILLAS, lexema, "Comillas", fila, columna));
                             lexema = "";
+                        }else if (variable == ' ' || variable == '\t')
+                        {
+                            //lexema = lexema + variable; //UN CAMBIO AQUI
+                            estadoActual = 14;
                         }
-                        
-                            /*else if(Character.isLetter(variable)){
-                        estadoActual=10;
-                        lexema=lexema+variable;
-                    }*/
+                        ////////////////-///////////////////////
+                        else
+                        {
+                            lexema = lexema + variable;
+                            estadoActual = 0;
+                            listaErrores.AddLast(new ErroresLexicos(lexema, "Lexico", "Elemento desconocido", fila, columna));
+                            lexema = "";
+                        }
+
+
+                        /*else if(Character.isLetter(variable)){
+                    estadoActual=10;
+                    lexema=lexema+variable;
+                }*/
                         break;
                     case 15:
                         if (variable == '"')
@@ -275,6 +321,7 @@ namespace _OLC1_Proyecto1
                             lexema = "";
                             estadoActual = 19;
                         }
+                        
                         
                         break;
 
@@ -303,6 +350,7 @@ namespace _OLC1_Proyecto1
                             lexema = "";
                             estadoActual = 21;
                         }
+                       
                         
                         break;
                     case 21:
@@ -340,6 +388,7 @@ namespace _OLC1_Proyecto1
                             lexema = "";
                             estadoActual =0;
                         }
+                        
                         break;
                 }
 
@@ -721,6 +770,101 @@ namespace _OLC1_Proyecto1
 
 
         }*/
+        public void reporteErroresXML()
+        {
+            TextWriter escribir;
+            String ruta = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Reporte" + "\\" + "ReporteErrores.xml";
+            String ruta2 = Application.StartupPath + "\\Reporte" + "\\" + "ReporteErrores.xml";
+            String ruta4 = Application.StartupPath + @"\Reporte";
+            try
+            {
+                if (Directory.Exists(ruta4))
+                {
+                    MessageBox.Show("Carpeta Reporte Existe");
+                }
+                else
+                {
+                    MessageBox.Show("Carpeta Reporte No Existe, Creando....");
+                    Directory.CreateDirectory(ruta4);
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+            escribir = new StreamWriter(ruta2);
+
+            escribir.WriteLine("<ListaTokens>");
+
+
+            for (int i = 0; i < listaErrores.Count; i++)
+            {
+                if (!listaErrores.ElementAt(i).error.Equals("<"))
+                {
+                    escribir.WriteLine("<Token>");
+                    
+                    escribir.WriteLine("<Valor>" + "\" " + listaErrores.ElementAt(i).error + " \"" + "</Valor>");
+                    escribir.WriteLine("<Fila>" + "\" " + listaErrores.ElementAt(i).fila + " \"" + "</Fila>");
+                    escribir.WriteLine("<Columna>" + "\" " + listaErrores.ElementAt(i).columna + " \"" + "</Columna>");
+
+                    escribir.WriteLine("</Token>");
+
+                }
+
+            }
+            escribir.WriteLine("</ListaTokens>");
+
+            escribir.Close();
+            Process.Start(ruta2);
+        }
+        public void reporteTokensXML()
+        {
+            TextWriter escribir;
+            String ruta = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Reporte" + "\\" + "ReporteToken.xml";
+            String ruta2 = Application.StartupPath + "\\Reporte" + "\\" + "ReporteToken.xml";
+            String ruta4 = Application.StartupPath + @"\Reporte";
+            try
+            {
+                if (Directory.Exists(ruta4))
+                {
+                    MessageBox.Show("Carpeta Reporte Existe");
+                }
+                else
+                {
+                    MessageBox.Show("Carpeta Reporte No Existe, Creando....");
+                    Directory.CreateDirectory(ruta4);
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+            escribir = new StreamWriter(ruta2);
+
+            escribir.WriteLine("<ListaTokens>");
+            
+
+            for (int i = 0; i < listaTokens.Count; i++)
+            {
+                if (!listaTokens.ElementAt(i).lexema.Equals("<"))
+                {
+                    escribir.WriteLine("<Token>");
+                    escribir.WriteLine("<Nombre>" + listaTokens.ElementAt(i).lexema + "</Nombre>");
+                    escribir.WriteLine("<Valor>" + "\" " + listaTokens.ElementAt(i).tipo1 + " \"" + "</Valor>");
+                    escribir.WriteLine("<Fila>" + "\" " + listaTokens.ElementAt(i).fila + " \"" + "</Fila>");
+                    escribir.WriteLine("<Columna>" + "\" " + listaTokens.ElementAt(i).columna + " \"" + "</Columna>");
+
+                    escribir.WriteLine("</Token>");
+
+                }
+                
+            }
+            escribir.WriteLine("</ListaTokens>");
+            
+            escribir.Close();
+            Process.Start(ruta2);
+
+        }
 
        public void reporteHtml()
         {
@@ -773,6 +917,7 @@ namespace _OLC1_Proyecto1
             escribir.WriteLine("</body>");
             escribir.WriteLine("</html>");
             escribir.Close();
+            Process.Start(ruta2);
         }
 
         public void ReporteErrores()
@@ -828,6 +973,7 @@ namespace _OLC1_Proyecto1
             escribir.WriteLine("</body>");
             escribir.WriteLine("</html>");
             escribir.Close();
+            Process.Start(ruta2);
         }
         
 
