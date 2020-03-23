@@ -16,13 +16,15 @@ namespace _OLC1_Proyecto1
         LinkedList<String> listaPestanas = new LinkedList<String>();
         int contador = 0;
         OpenFileDialog seleccionar = new OpenFileDialog();
+        List<Imagen> listaAuxT = new List<Imagen>();
+
 
         /*{
             InitialDirectory = "C:\\",
             Filter = "er files (*.er)|*.er|All files (*.*)|*.*",
             RestoreDirectory = true,
         };*/
-        
+
         //FileInfo archivo;
         StreamReader leer;
         StreamWriter escribir;
@@ -195,6 +197,12 @@ namespace _OLC1_Proyecto1
                 analizar.ReporteErrores();
                 analizar.reporteTokensXML();
                 analizar.reporteErroresXML();
+                listBox1.Items.Clear();
+                for (int i=0;i<analizar.listaImagenesThompson2.Count;i++)
+                {
+                    listBox1.Items.Add(analizar.listaImagenesThompson2.ElementAt(i).nombre);
+                }
+                listaAuxT = analizar.listaImagenesThompson2;
             }
             else
             {
@@ -205,6 +213,31 @@ namespace _OLC1_Proyecto1
         private void button2_Click(object sender, EventArgs e)
         {
             MetodoThompson mp = new MetodoThompson(null);
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void listBox1_DoubleClick(object sender, EventArgs e)
+        {
+            for (int i = 0; i < listaAuxT.Count; i++)
+            {
+                if (listBox1.SelectedItem.ToString().Equals(listaAuxT.ElementAt(i).nombre))
+                {
+                    VentanaImagenes imagenT = new VentanaImagenes();
+                    imagenT.aux = listaAuxT.ElementAt(i).rutaImagen;
+                    imagenT.crearImagen();
+                    imagenT.Show();
+                }
+
+            }
         }
     }
 }

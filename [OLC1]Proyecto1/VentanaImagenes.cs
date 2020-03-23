@@ -12,9 +12,23 @@ namespace _OLC1_Proyecto1
 {
     public partial class VentanaImagenes : Form
     {
+        public String aux = "";
         public VentanaImagenes()
         {
             InitializeComponent();
+
+            
+        }
+        public void crearImagen()
+        {
+            pictureBox1.ImageLocation = aux;
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.Show();
+        }
+
+        private void VentanaImagenes_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

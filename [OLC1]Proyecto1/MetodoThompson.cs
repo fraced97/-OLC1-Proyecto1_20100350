@@ -18,7 +18,8 @@ namespace _OLC1_Proyecto1
          LinkedList<Estados> listaEstados = new LinkedList<Estados>();
          LinkedList<TokenER> copiaLista;
          LinkedList<TokenER>listaTerminales=new LinkedList<TokenER>();
-         
+         public static List<Imagen> listaImagenesThompson = new List<Imagen>();
+
 
         //LinkedList<Estados> listaEstadosCerradura = new LinkedList<Estados>();
 
@@ -29,6 +30,15 @@ namespace _OLC1_Proyecto1
         LinkedList<Cerradura> cerraduras = new LinkedList<Cerradura>();
 
         public ArrayList arregloEnteros = new ArrayList();
+
+        public List<Imagen> crearImagen()
+        {
+             List<Imagen> listaImagenesaux = new List<Imagen>();
+             listaImagenesaux = listaImagenesThompson;
+
+
+            return listaImagenesaux;
+        }
 
         public MetodoThompson(LinkedList<TokenER> listaER)
         {
@@ -359,6 +369,7 @@ namespace _OLC1_Proyecto1
             String ruta = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Thompson" + "\\" + "Thompson"+indiceDot.ToString()+".dot";
             String ruta2 = Application.StartupPath + "\\Thompson" + "\\" + "Thompson"+ indiceDot.ToString() + ".dot";
             String ruta4 = Application.StartupPath + @"\Thompson";
+            
             try
             {
                 if (Directory.Exists(ruta4))
@@ -390,7 +401,7 @@ namespace _OLC1_Proyecto1
 
             String rutaImagen = Application.StartupPath + "//Thompson" + "//" + "ThompsonImagen"+ indiceDot.ToString() + ".jpg";
             String rutaDot = Application.StartupPath + "//Thompson" + "//" + "Thompson"+ indiceDot.ToString() + ".dot";
-            
+            listaImagenesThompson.Add(new Imagen("ThompsonImagen" + indiceDot.ToString() + ".jpg", rutaImagen));
             Process process = new Process();
             process.StartInfo.FileName = "cmd.exe";
             process.StartInfo.CreateNoWindow = true;

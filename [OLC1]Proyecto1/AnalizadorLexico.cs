@@ -11,6 +11,7 @@ namespace _OLC1_Proyecto1
 {
     class AnalizadorLexico
     {
+        public static int indiceReporte = 0;
         LinkedList<Token> listaTokens = new LinkedList<Token>();
         LinkedList<ErroresLexicos> listaErrores = new LinkedList<ErroresLexicos>();
         LinkedList<TokenER> listaTokenER = new LinkedList<TokenER>();
@@ -23,6 +24,8 @@ namespace _OLC1_Proyecto1
         /// <summary>
         /// //////////////////////
         /// </summary>
+        /// 
+        public List<Imagen> listaImagenesThompson2 = new List<Imagen>();
 
         public void LimpiarLista()
         {
@@ -483,7 +486,7 @@ namespace _OLC1_Proyecto1
                                     //OrdenarExR(listaTokenER);
                                     MetodoThompson metodoT = new MetodoThompson(listaTokenER);
 
-
+                                    listaImagenesThompson2 = metodoT.crearImagen();
                                     listaTokenER.Clear();
 
                                     estado = 0;
@@ -773,8 +776,8 @@ namespace _OLC1_Proyecto1
         public void reporteErroresXML()
         {
             TextWriter escribir;
-            String ruta = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Reporte" + "\\" + "ReporteErrores.xml";
-            String ruta2 = Application.StartupPath + "\\Reporte" + "\\" + "ReporteErrores.xml";
+            String ruta = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Reporte" + "\\" + "ReporteErrores"+indiceReporte+".xml";
+            String ruta2 = Application.StartupPath + "\\Reporte" + "\\" + "ReporteErrores"+indiceReporte+".xml";
             String ruta4 = Application.StartupPath + @"\Reporte";
             try
             {
@@ -794,7 +797,7 @@ namespace _OLC1_Proyecto1
             }
             escribir = new StreamWriter(ruta2);
 
-            escribir.WriteLine("<ListaTokens>");
+            escribir.WriteLine("<ListaErrores>");
 
 
             for (int i = 0; i < listaErrores.Count; i++)
@@ -812,7 +815,7 @@ namespace _OLC1_Proyecto1
                 }
 
             }
-            escribir.WriteLine("</ListaTokens>");
+            escribir.WriteLine("</ListaErrores>");
 
             escribir.Close();
             Process.Start(ruta2);
@@ -820,8 +823,8 @@ namespace _OLC1_Proyecto1
         public void reporteTokensXML()
         {
             TextWriter escribir;
-            String ruta = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Reporte" + "\\" + "ReporteToken.xml";
-            String ruta2 = Application.StartupPath + "\\Reporte" + "\\" + "ReporteToken.xml";
+            String ruta = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Reporte" + "\\" + "ReporteToken"+indiceReporte+".xml";
+            String ruta2 = Application.StartupPath + "\\Reporte" + "\\" + "ReporteToken"+indiceReporte+".xml";
             String ruta4 = Application.StartupPath + @"\Reporte";
             try
             {
@@ -868,9 +871,10 @@ namespace _OLC1_Proyecto1
 
        public void reporteHtml()
         {
+            indiceReporte++;
             TextWriter escribir;
-            String ruta = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Reporte" + "\\" + "ReporteToken.html";
-            String ruta2 = Application.StartupPath + "\\Reporte" + "\\" + "ReporteToken.html";
+            String ruta = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Reporte" + "\\" + "ReporteToken"+indiceReporte+".html";
+            String ruta2 = Application.StartupPath + "\\Reporte" + "\\" + "ReporteToken"+indiceReporte+".html";
             String ruta4 = Application.StartupPath + @"\Reporte";
             try
             {
@@ -923,8 +927,8 @@ namespace _OLC1_Proyecto1
         public void ReporteErrores()
         {
             TextWriter escribir;
-            String ruta = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Reporte" + "\\" + "ReporteErrores.html";
-            String ruta2 = Application.StartupPath + "\\Reporte" + "\\" + "ReporteErrores.html";
+            String ruta = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Reporte" + "\\" + "ReporteErrores"+indiceReporte+".html";
+            String ruta2 = Application.StartupPath + "\\Reporte" + "\\" + "ReporteErrores"+indiceReporte+".html";
             String ruta4 = Application.StartupPath + @"\Reporte";
             try
             {
