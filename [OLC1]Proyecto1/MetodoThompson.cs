@@ -287,9 +287,11 @@ namespace _OLC1_Proyecto1
             {
                 aux = listaEstados.ElementAt(i);
                 aux.arregloEnteros.Add(aux.indiceEstado);
+                aux.listaEstadosCerradura.AddLast(aux);
                 aux.arregloEnteros=GenerarCerradura(aux,aux.arregloEnteros);
-                aux.arregloEnteros.Sort();
-                cerraduras.AddLast(new Cerradura(aux.indiceEstado,aux,aux.arregloEnteros));           
+                aux.listaEstadosCerradura =GenerarCerradura2(aux,aux.listaEstadosCerradura);
+                //aux.arregloEnteros.Sort();
+                cerraduras.AddLast(new Cerradura(aux.indiceEstado,aux,aux.arregloEnteros,aux.listaEstadosCerradura));           
     
             }
             for (int i=0;i<cerraduras.Count;i++)
@@ -299,7 +301,11 @@ namespace _OLC1_Proyecto1
 
                     //Console.WriteLine(cerraduras.ElementAt(i).estadoPrincipal.indiceEstado+"-----------"+ cerraduras.ElementAt(i).arregloEnteros[j].ToString());
                     Console.WriteLine(cerraduras.ElementAt(i).indiceEstado+"-------"+cerraduras.ElementAt(i).estadoPrincipal.indiceEstado + "-----------" + cerraduras.ElementAt(i).arregloEnteros[j].ToString());
-
+                    for (int k=0;k< cerraduras.ElementAt(i).listaEstadosCerradura.Count;k++)
+                    {
+                        Console.WriteLine("**********" + cerraduras.ElementAt(i).listaEstadosCerradura.ElementAt(k).indiceEstado + "*************");
+                    }
+                    
                 }
             }
             
@@ -346,6 +352,20 @@ namespace _OLC1_Proyecto1
              {
                  Console.WriteLine("*******"+"X"+listaEstadosCerradura.ElementAt(i).indiceEstado+"**************");
              }*/
+        }
+
+        public LinkedList<Estados> GenerarCerradura2(Estados aux,LinkedList<Estados> listaC)
+        {
+            foreach (Trancisiones i in aux.listaTrancisiones)
+            {
+                if (i.estadoSiguiete.nombre.Equals("ε"))
+                {
+                    listaC.AddLast(i.estadoSiguiete);
+
+                    GenerarCerradura2(i.estadoSiguiete, listaC);
+                }
+            }
+            return listaC;
         }
 
         public void generear_grafica() {

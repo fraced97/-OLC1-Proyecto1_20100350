@@ -18,6 +18,9 @@ namespace _OLC1_Proyecto1
         public List<int> arregloEnteros = new List<int>();
         //public Trancisiones trancision;
         //LinkedList<Cerradura> listaCerradura = new LinkedList<Cerradura>();
+
+       public  LinkedList<Estados> listaEstadosCerradura = new LinkedList<Estados>();
+
         public Cerradura listaCerradura;
         public Estados(string nombre, Token tipoToken, int contador, bool condicion)
         {
