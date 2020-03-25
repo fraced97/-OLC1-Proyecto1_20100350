@@ -12,11 +12,18 @@ namespace _OLC1_Proyecto1
         public Estados estadoPrincipal;
         //public LinkedList<Estados> listaEstados = new LinkedList<Estados>();
         public List<int> arregloEnteros = new List<int>();
-        public int indiceEstado;
-        public LinkedList<Estados> listaEstadosCerradura = new LinkedList<Estados>();
-        public Cerradura(int indiceestado,Estados estadoPrincipal, List<int> arregloEnteros,LinkedList<Estados> listaEstadoscerradura)
+        public int indiceEstadoCerradura;
+        LinkedList<Estados> listaEstadosCerradura = new LinkedList<Estados>();
+        public Cerradura(int indiceestado,Estados estadoPrincipal, List<int> arregloEnteros)
         {
-            indiceEstado = indiceestado;
+            indiceEstadoCerradura = indiceestado;
+            this.estadoPrincipal = estadoPrincipal;
+            this.arregloEnteros = arregloEnteros;
+            //this.listaEstadosCerradura = listaEstadoscerradura;
+        }
+        public Cerradura(int indiceestado, Estados estadoPrincipal, List<int> arregloEnteros, LinkedList<Estados> listaEstadoscerradura)
+        {
+            indiceEstadoCerradura = indiceestado;
             this.estadoPrincipal = estadoPrincipal;
             this.arregloEnteros = arregloEnteros;
             this.listaEstadosCerradura = listaEstadoscerradura;

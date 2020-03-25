@@ -12,6 +12,7 @@ namespace _OLC1_Proyecto1
         public Estados estadoSiguiete;
         public bool condicion;
         public int numero;
+        public String NombreTrans;
 
         public Trancisiones(string nombre, Estados estadoSiguiete, bool condicion, int numero)
         {
@@ -25,6 +26,14 @@ namespace _OLC1_Proyecto1
             this.terminal = nombre;
             this.estadoSiguiete = estadoSiguiete;
            // this.condicion = condicion;
+            //this.numero = numero;
+        }
+        public Trancisiones(string nombre, Estados estadoSiguiete,String nombreTrans)
+        {
+            this.terminal = nombre;
+            this.estadoSiguiete = estadoSiguiete;
+            NombreTrans = nombreTrans;
+            // this.condicion = condicion;
             //this.numero = numero;
         }
     }

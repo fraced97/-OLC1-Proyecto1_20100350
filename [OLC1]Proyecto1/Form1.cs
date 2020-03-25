@@ -193,10 +193,10 @@ namespace _OLC1_Proyecto1
                 String documento = texto.Text;
                 analizar.Analizar(documento);
                 analizar.AnalizarER();
-                analizar.reporteHtml();
-                analizar.ReporteErrores();
-                analizar.reporteTokensXML();
-                analizar.reporteErroresXML();
+                //analizar.reporteHtml();
+                //analizar.ReporteErrores();
+                //analizar.reporteTokensXML();
+                //analizar.reporteErroresXML();
                 listBox1.Items.Clear();
                 for (int i=0;i<analizar.listaImagenesThompson2.Count;i++)
                 {

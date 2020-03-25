@@ -19,9 +19,10 @@ namespace _OLC1_Proyecto1
         //public Trancisiones trancision;
         //LinkedList<Cerradura> listaCerradura = new LinkedList<Cerradura>();
 
-       public  LinkedList<Estados> listaEstadosCerradura = new LinkedList<Estados>();
+         LinkedList<Estados> listaEstadosCerradura = new LinkedList<Estados>();
+        public String nombreTrans;
 
-        public Cerradura listaCerradura;
+        //public Cerradura listaCerradura;
         public Estados(string nombre, Token tipoToken, int contador, bool condicion)
         {
             this.nombre = nombre;
@@ -60,8 +61,27 @@ namespace _OLC1_Proyecto1
         public Estados(String nombreEstado, Cerradura listacerradura)
         {
             nombre = nombreEstado;
-            listaCerradura = listacerradura;
+            //listaCerradura = listacerradura;
         }
-
+        public Estados(String nombreEstado, List<int> arregloenteros)
+        {
+            nombre = nombreEstado;
+            //listaCerradura = listaNumerosT;
+            arregloEnteros = arregloenteros;
+        }
+        public Estados(String nombreEstado, List<int> arregloenteros,String auxTrans)
+        {
+            nombre = nombreEstado;
+            //listaCerradura = listaNumerosT;
+            arregloEnteros = arregloenteros;
+            nombreTrans = auxTrans;
+        }
+        public Estados(String nombreEstado, List<int> arregloenteros,LinkedList<Estados> listaEstadoscerradura)
+        {
+            nombre = nombreEstado;
+            //listaCerradura = listaNumerosT;
+            arregloEnteros = arregloenteros;
+            listaEstadosCerradura = listaEstadoscerradura;
+        }
     }
 }

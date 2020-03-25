@@ -19,6 +19,7 @@ namespace _OLC1_Proyecto1
          LinkedList<TokenER> copiaLista;
          LinkedList<TokenER>listaTerminales=new LinkedList<TokenER>();
          public static List<Imagen> listaImagenesThompson = new List<Imagen>();
+        int IndiceAFNAUX = 0;
 
 
         //LinkedList<Estados> listaEstadosCerradura = new LinkedList<Estados>();
@@ -93,7 +94,7 @@ namespace _OLC1_Proyecto1
         {
             
             crearEstado(estado0).agregart("ε", estado1,1);
-            crearEstado(estado1).agregart(estado1.nombre, estado2,1);
+            crearEstado(estado1).agregart("1919", estado2,1);
             crearEstado(estado2).agregart("ε", estado3,1);
             crearEstado(estado2).agregart("ε", estado1,2);
             crearEstado(estado0).agregart("ε", estado3,2);
@@ -104,8 +105,8 @@ namespace _OLC1_Proyecto1
         {
             crearEstado(estado0).agregart("ε", estado1,1);
             crearEstado(estado0).agregart("ε", estado2,2);
-            crearEstado(estado1).agregart(estado1.nombre, estado3,1);
-            crearEstado(estado2).agregart(estado2.nombre, estado4,1);
+            crearEstado(estado1).agregart("2000", estado3,1);
+            crearEstado(estado2).agregart("88888", estado4,1);
             crearEstado(estado3).agregart("ε", estado5,1);
             crearEstado(estado4).agregart("ε", estado5,1);
           
@@ -287,11 +288,12 @@ namespace _OLC1_Proyecto1
             {
                 aux = listaEstados.ElementAt(i);
                 aux.arregloEnteros.Add(aux.indiceEstado);
-                aux.listaEstadosCerradura.AddLast(aux);
+                //aux.listaEstadosCerradura.AddLast(aux);
                 aux.arregloEnteros=GenerarCerradura(aux,aux.arregloEnteros);
-                aux.listaEstadosCerradura =GenerarCerradura2(aux,aux.listaEstadosCerradura);
-                //aux.arregloEnteros.Sort();
-                cerraduras.AddLast(new Cerradura(aux.indiceEstado,aux,aux.arregloEnteros,aux.listaEstadosCerradura));           
+                //aux.listaEstadosCerradura =GenerarCerradura2(aux,aux.listaEstadosCerradura);
+                aux.arregloEnteros = aux.arregloEnteros.Distinct().ToList();
+                aux.arregloEnteros.Sort();
+                cerraduras.AddLast(new Cerradura(aux.indiceEstado,aux,aux.arregloEnteros));           
     
             }
             for (int i=0;i<cerraduras.Count;i++)
@@ -300,15 +302,16 @@ namespace _OLC1_Proyecto1
                 {
 
                     //Console.WriteLine(cerraduras.ElementAt(i).estadoPrincipal.indiceEstado+"-----------"+ cerraduras.ElementAt(i).arregloEnteros[j].ToString());
-                    Console.WriteLine(cerraduras.ElementAt(i).indiceEstado+"-------"+cerraduras.ElementAt(i).estadoPrincipal.indiceEstado + "-----------" + cerraduras.ElementAt(i).arregloEnteros[j].ToString());
-                    for (int k=0;k< cerraduras.ElementAt(i).listaEstadosCerradura.Count;k++)
+                    Console.WriteLine(cerraduras.ElementAt(i).indiceEstadoCerradura+"-------"+cerraduras.ElementAt(i).estadoPrincipal.indiceEstado + "-----------" + cerraduras.ElementAt(i).arregloEnteros[j].ToString());
+                    /*for (int k=0;k< cerraduras.ElementAt(i).listaEstadosCerradura.Count;k++)
                     {
                         Console.WriteLine("**********" + cerraduras.ElementAt(i).listaEstadosCerradura.ElementAt(k).indiceEstado + "*************");
-                    }
+                    }*/
                     
                 }
             }
-            
+
+            Afd nuevoAfd = new Afd(listaTerminales,cerraduras,listaEstados,IndiceAFNAUX);
 
         }
         public void Letras()
@@ -406,6 +409,7 @@ namespace _OLC1_Proyecto1
             {
 
             }
+            IndiceAFNAUX = (indiceAfn - 1);
             escribir = new StreamWriter(ruta2);
             escribir.WriteLine("digraph G {\n");
             escribir.WriteLine("rankdir=LR;");
