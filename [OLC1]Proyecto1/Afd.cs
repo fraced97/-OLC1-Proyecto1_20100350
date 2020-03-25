@@ -33,7 +33,9 @@ namespace _OLC1_Proyecto1
         String auxTerminal = "";
 
         int indiceEstadoNuevo = 0;
-        
+
+        public static List<Imagen> listaImagenesAFD = new List<Imagen>();
+
 
         public Afd(LinkedList<TokenER> listaTerminales, LinkedList<Cerradura> listacerraduras, LinkedList<Estados> estadosThompson, int IndiceEstadoAfn)
         {
@@ -408,7 +410,7 @@ namespace _OLC1_Proyecto1
 
             String rutaImagen = Application.StartupPath + "//AFD" + "//" + "AFDImagen" + indiceDot.ToString() + ".jpg";
             String rutaDot = Application.StartupPath + "//AFD" + "//" + "AFD" + indiceDot.ToString() + ".dot";
-            //listaImagenesThompson.Add(new Imagen("ThompsonImagen" + indiceDot.ToString() + ".jpg", rutaImagen));
+            listaImagenesAFD.Add(new Imagen("AFDImagen" + indiceDot.ToString() + ".jpg", rutaImagen));
             Process process = new Process();
             process.StartInfo.FileName = "cmd.exe";
             process.StartInfo.CreateNoWindow = true;
@@ -422,6 +424,16 @@ namespace _OLC1_Proyecto1
             process.WaitForExit();
             Console.WriteLine(process.StandardOutput.ReadToEnd());
 
+        }
+
+
+        public List<Imagen> crearImagen()
+        {
+            List<Imagen> listaImagenesaux = new List<Imagen>();
+            listaImagenesaux = listaImagenesAFD;
+
+
+            return listaImagenesaux;
         }
 
         public static bool CompareLists<T>(List<T> aListA, List<T> aListB)

@@ -26,6 +26,7 @@ namespace _OLC1_Proyecto1
         /// </summary>
         /// 
         public List<Imagen> listaImagenesThompson2 = new List<Imagen>();
+        public List<Imagen> listaImagenesAfd2 = new List<Imagen>();
 
         public void LimpiarLista()
         {
@@ -487,6 +488,7 @@ namespace _OLC1_Proyecto1
                                     MetodoThompson metodoT = new MetodoThompson(listaTokenER);
 
                                     listaImagenesThompson2 = metodoT.crearImagen();
+                                    listaImagenesAfd2 = metodoT.crearImagenAfd();
                                     listaTokenER.Clear();
 
                                     estado = 0;

@@ -17,6 +17,7 @@ namespace _OLC1_Proyecto1
         int contador = 0;
         OpenFileDialog seleccionar = new OpenFileDialog();
         List<Imagen> listaAuxT = new List<Imagen>();
+        List<Imagen> listaAuxAfd = new List<Imagen>();
 
 
         /*{
@@ -203,6 +204,13 @@ namespace _OLC1_Proyecto1
                     listBox1.Items.Add(analizar.listaImagenesThompson2.ElementAt(i).nombre);
                 }
                 listaAuxT = analizar.listaImagenesThompson2;
+                listBox2.Items.Clear();
+                for (int i = 0; i < analizar.listaImagenesAfd2.Count;i++)
+                {
+                    listBox2.Items.Add(analizar.listaImagenesAfd2.ElementAt(i).nombre);
+                }
+                listaAuxAfd = analizar.listaImagenesAfd2;
+
             }
             else
             {
@@ -233,6 +241,21 @@ namespace _OLC1_Proyecto1
                 {
                     VentanaImagenes imagenT = new VentanaImagenes();
                     imagenT.aux = listaAuxT.ElementAt(i).rutaImagen;
+                    imagenT.crearImagen();
+                    imagenT.Show();
+                }
+
+            }
+        }
+
+        private void listBox2_DoubleClick(object sender, EventArgs e)
+        {
+            for (int i = 0; i < listaAuxAfd.Count; i++)
+            {
+                if (listBox2.SelectedItem.ToString().Equals(listaAuxAfd.ElementAt(i).nombre))
+                {
+                    VentanaImagenes imagenT = new VentanaImagenes();
+                    imagenT.aux = listaAuxAfd.ElementAt(i).rutaImagen;
                     imagenT.crearImagen();
                     imagenT.Show();
                 }

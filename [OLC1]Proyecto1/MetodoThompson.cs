@@ -19,6 +19,7 @@ namespace _OLC1_Proyecto1
          LinkedList<TokenER> copiaLista;
          LinkedList<TokenER>listaTerminales=new LinkedList<TokenER>();
          public static List<Imagen> listaImagenesThompson = new List<Imagen>();
+        List<Imagen> listaImagenesAfd3 = new List<Imagen>();
         int IndiceAFNAUX = 0;
 
 
@@ -36,6 +37,15 @@ namespace _OLC1_Proyecto1
         {
              List<Imagen> listaImagenesaux = new List<Imagen>();
              listaImagenesaux = listaImagenesThompson;
+
+
+            return listaImagenesaux;
+        }
+
+        public List<Imagen> crearImagenAfd()
+        {
+            List<Imagen> listaImagenesaux = new List<Imagen>();
+            listaImagenesaux = listaImagenesAfd3;
 
 
             return listaImagenesaux;
@@ -312,6 +322,7 @@ namespace _OLC1_Proyecto1
             }
 
             Afd nuevoAfd = new Afd(listaTerminales,cerraduras,listaEstados,IndiceAFNAUX);
+            listaImagenesAfd3 = nuevoAfd.crearImagen();
 
         }
         public void Letras()
