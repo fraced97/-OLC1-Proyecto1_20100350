@@ -29,6 +29,16 @@ namespace _OLC1_Proyecto1
         public List<Imagen> listaImagenesAfd2 = new List<Imagen>();
         public List<Imagen> listaImagenesTabla2 = new List<Imagen>();
 
+
+        public List<Conjunto> listaConjuntos = new List<Conjunto>();
+        public List<EjExpresionR> listaIdExpresionR = new List<EjExpresionR>();
+        String auxConjunto = "";
+        String auxIdExpresionR = "";
+
+        String IdUtilizar = "";
+        LinkedList<Estados> listaEstadosAFD = new LinkedList<Estados>();
+        String capturar = "";
+
         public void LimpiarLista()
         {
             listaTokens.Clear();
@@ -219,6 +229,7 @@ namespace _OLC1_Proyecto1
                         }
                         else if (variable == ':')
                         {
+                            auxIdExpresionR = lexema;
                             listaTokens.AddLast(new Token(Token.Tipo.IDENTIFICADOR, lexema, "Identificador", fila, columna - 1));
                             lexema = "";
                             estadoActual = 14;
@@ -304,6 +315,9 @@ namespace _OLC1_Proyecto1
                     case 15:
                         if (variable == '"')
                         {
+                            listaIdExpresionR.Add(new EjExpresionR(auxIdExpresionR, lexema));
+                            auxIdExpresionR = "";
+
                             listaTokens.AddLast(new Token(Token.Tipo.EJEMPLO_EXPRESION, lexema, "Ejemplo Expresion", fila, columna - 1));
                             lexema = "";
                             estadoActual = 22;
@@ -333,6 +347,8 @@ namespace _OLC1_Proyecto1
                     case 19:
                         if (variable == ';')
                         {
+                            listaConjuntos.Add(new Conjunto(auxConjunto,lexema));
+                            auxConjunto = "";
                             listaTokens.AddLast(new Token(Token.Tipo.CONJUNTO, lexema, "Conjunto", fila, columna - 1));
                             lexema = "";
                             lexema = lexema + variable;
@@ -376,6 +392,7 @@ namespace _OLC1_Proyecto1
                         }
                         else if (variable == '-')
                         {
+                            auxConjunto = lexema;
                             listaTokens.AddLast(new Token(Token.Tipo.IDENTIFICADOR_CONJ, lexema, "Identificador Conj", fila, columna - 1));
                             lexema = "";
                             lexema = lexema + variable;
@@ -435,6 +452,10 @@ namespace _OLC1_Proyecto1
         int contador = 0;
         //Token auxContador;
         foreach (Token i in listaTokens) {
+                if (i.token.ToString().Equals("IDENTIFICADOR"))
+                {
+                    IdUtilizar = i.lexema;
+                }
             if(i.token.ToString().Equals("EXPRESION_REGULAR")){
                 
                 nExpresion++;
@@ -488,9 +509,24 @@ namespace _OLC1_Proyecto1
                                     //OrdenarExR(listaTokenER);
                                     MetodoThompson metodoT = new MetodoThompson(listaTokenER);
 
+                                    //listaEstadosAFD = metodoT.MandarListaAFD();
+                                   /* for (int p = 0; p < listaIdExpresionR.Count; p++)
+                                    {
+                                        if (IdUtilizar.Equals(listaIdExpresionR.ElementAt(p).Id))
+                                        {
+
+
+                                           // listaIdExpresionR.ElementAt(p).listaEstadosAfd = metodoT.MandarListaAFD();
+                                        }
+                                        
+                                    }*/
+                                    //VerificarLexema();
                                     listaImagenesThompson2 = metodoT.crearImagen();
                                     listaImagenesAfd2 = metodoT.crearImagenAfd();
                                     listaImagenesTabla2 = metodoT.crearImagenTabla();
+
+                                    //listaIdExpresionR.Clear();
+
                                     listaTokenER.Clear();
 
                                     estado = 0;
@@ -588,6 +624,195 @@ namespace _OLC1_Proyecto1
 
 
     }
+
+
+     public List<EjExpresionR> mandarListaExpresionesR()
+        {
+            return listaIdExpresionR;
+        }
+
+
+
+
+        public void VerificarLexema()
+        {
+            String auxPosicionEstado = "";
+            int auxAfd = 0;
+            int auxAf2 = 0;
+            Boolean encontroTrancision = false;
+            for (int i=0;i<listaIdExpresionR.Count;i++)
+            {
+                auxAfd = 0;
+                if (IdUtilizar.Equals(listaIdExpresionR.ElementAt(i).Id))
+                {
+                    auxAfd = 0;
+                   
+                    for (int j=0;j<listaIdExpresionR.ElementAt(i).ejemploExpresion.Length;j++)
+                    {
+                        for (int k = auxAf2; k < listaIdExpresionR.ElementAt(i).listaEstadosAfd.Count;k++)
+                        {
+                            encontroTrancision = false;
+                            auxAf2 = 0; 
+                            for (int p=0;p< listaIdExpresionR.ElementAt(i).listaEstadosAfd.ElementAt(k).listaTrancisiones.Count;p++)
+                            {
+                                
+                                if (listaIdExpresionR.ElementAt(i).listaEstadosAfd.ElementAt(k).listaTrancisiones.ElementAt(p).NombreTrans.Length==1)
+                                {
+                                    //cadena
+                                    if (listaIdExpresionR.ElementAt(i).listaEstadosAfd.ElementAt(k).listaTrancisiones.ElementAt(p).NombreTrans.Equals(listaIdExpresionR.ElementAt(i).ejemploExpresion[j]))
+                                    {
+                                        while (true)
+                                        {
+                                            if (listaIdExpresionR.ElementAt(i).listaEstadosAfd.ElementAt(auxAf2).nombre.Equals(listaIdExpresionR.ElementAt(i).listaEstadosAfd.ElementAt(k).listaTrancisiones.ElementAt(p).terminal))
+                                            {
+                                                encontroTrancision = true;
+                                                break;
+                                            }
+                                            auxAf2++;
+                                        }
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        if ((listaIdExpresionR.ElementAt(i).listaEstadosAfd.ElementAt(k).listaTrancisiones.Count - 1) == p)
+                                        {
+                                            Console.WriteLine("MANDO UN ERROR FATAL");
+                                        }
+                                    }
+
+                                }
+                                else if (listaIdExpresionR.ElementAt(i).listaEstadosAfd.ElementAt(k).listaTrancisiones.ElementAt(p).NombreTrans.Length>1)
+                                {
+                                    //identificador
+
+                                    for (int y=0;y<listaConjuntos.Count;y++)
+                                    {
+                                        if (listaConjuntos.ElementAt(y).Id.Equals(listaIdExpresionR.ElementAt(i).listaEstadosAfd.ElementAt(k).listaTrancisiones.ElementAt(p).NombreTrans))
+                                        {
+                                            if (listaConjuntos.ElementAt(y).listaCaracteres.Count != 0)
+                                            {
+                                                for (int r = 0; r < listaConjuntos.ElementAt(y).listaCaracteres.Count; r++)
+                                                {
+                                                    if (listaConjuntos.ElementAt(y).listaCaracteres.ElementAt(r).Equals(listaIdExpresionR.ElementAt(i).ejemploExpresion[j]))
+                                                    {
+
+                                                        while (true)
+                                                        {
+                                                            if (listaIdExpresionR.ElementAt(i).listaEstadosAfd.ElementAt(auxAf2).nombre.Equals(listaIdExpresionR.ElementAt(i).listaEstadosAfd.ElementAt(k).listaTrancisiones.ElementAt(p).terminal))
+                                                            {
+                                                                encontroTrancision = true;
+                                                                break;
+                                                            }
+                                                            auxAf2++;
+                                                        }
+
+                                                        break;
+                                                    }
+                                                    else
+                                                    {
+                                                        if ((listaConjuntos.ElementAt(y).listaCaracteres.Count-1)==r)
+                                                        {
+                                                            Console.WriteLine();
+                                                            Console.WriteLine("Error Fatal");
+                                                        }
+                                                    }
+
+                                                }
+                                                break;
+
+                                            }
+                                            if (listaConjuntos.ElementAt(y).listaEnteros.Count != 0)
+                                            {
+                                                for (int r = 0; r < listaConjuntos.ElementAt(y).listaEnteros.Count; r++)
+                                                {
+                                                    if (listaConjuntos.ElementAt(y).listaEnteros.ElementAt(r).ToString().Equals(listaIdExpresionR.ElementAt(i).ejemploExpresion[j]))
+                                                    {
+                                                        while (true)
+                                                        {
+                                                            if (listaIdExpresionR.ElementAt(i).listaEstadosAfd.ElementAt(auxAf2).nombre.Equals(listaIdExpresionR.ElementAt(i).listaEstadosAfd.ElementAt(k).listaTrancisiones.ElementAt(p).terminal))
+                                                            {
+                                                                encontroTrancision = true;
+                                                                break;
+                                                            }
+                                                            auxAf2++;
+                                                        }
+
+                                                        break;
+                                                    }
+                                                    else
+                                                    {
+                                                        if ((listaConjuntos.ElementAt(y).listaEnteros.Count - 1) == r)
+                                                        {
+                                                            Console.WriteLine("Error Fatal");
+                                                        }
+                                                    }
+
+                                                }
+                                                 break;
+
+                                            }
+                                            if (listaConjuntos.ElementAt(y).listaDeComas.Count != 0)
+                                            {
+                                                for (int r = 0; r < listaConjuntos.ElementAt(y).listaDeComas.Count; r++)
+                                                {
+                                                    if (listaConjuntos.ElementAt(y).listaDeComas.ElementAt(r).Equals(listaIdExpresionR.ElementAt(i).ejemploExpresion[j]))
+                                                    {
+                                                        while (true)
+                                                        {
+                                                            if (listaIdExpresionR.ElementAt(i).listaEstadosAfd.ElementAt(auxAf2).nombre.Equals(listaIdExpresionR.ElementAt(i).listaEstadosAfd.ElementAt(k).listaTrancisiones.ElementAt(p).terminal))
+                                                            {
+                                                                encontroTrancision = true;
+                                                                break;
+                                                            }
+                                                            auxAf2++;
+                                                        }
+
+                                                        break;
+                                                    }
+                                                    else
+                                                    {
+                                                        if ((listaConjuntos.ElementAt(y).listaDeComas.Count - 1) == r)
+                                                        {
+                                                            Console.WriteLine("Error Fatal");
+                                                        }
+                                                    }
+
+                                                }
+                                                break;
+
+                                            }
+                                            
+                                        }
+                                        
+                                    }
+
+                                }
+                                if (encontroTrancision)
+                                {
+                                    break;
+                                }
+                                ///////////////AQUI
+                            }
+                            break;
+
+                        }
+
+
+                    }
+
+
+                }
+
+            }
+
+
+
+        }
+
+
+
+
+
         /*public void crearTrancision(Estados estadoInicial, Estados estadoFinal)
         {
             Estados aux = null;

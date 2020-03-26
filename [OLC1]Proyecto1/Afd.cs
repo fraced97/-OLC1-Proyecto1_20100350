@@ -53,6 +53,14 @@ namespace _OLC1_Proyecto1
             crearTabla();
 
         }
+
+
+        public LinkedList<Estados> obtenerListaAFD()
+        {
+            LinkedList<Estados> nuevaListaEstadosafn = new LinkedList<Estados>();
+            nuevaListaEstadosafn = nuevaListaEstadosAFN;
+            return nuevaListaEstadosafn;
+        }
         public void crearEstadoInicial()
         {
             indiceEstadoNuevo++;
@@ -353,7 +361,7 @@ namespace _OLC1_Proyecto1
                 {
                     texto = texto + "X" + nuevaListaEstadosAFN.ElementAt(i).nombre + "-> X"
                         + nuevaListaEstadosAFN.ElementAt(i).listaTrancisiones.ElementAt(j).terminal +
-                        "[label=\"" + nuevaListaEstadosAFN.ElementAt(i).listaTrancisiones.ElementAt(j).NombreTrans + "\"];\n";
+                        "[label=\"" + "["+ "\\" + nuevaListaEstadosAFN.ElementAt(i).listaTrancisiones.ElementAt(j).NombreTrans +"]"+ "\"];\n";
                     //estadosThompson.ElementAt(0).listaTrancisiones.AddLast(new Trancisiones());
                     //Console.WriteLine("-----****" + nuevaListaEstadosAFN.ElementAt(i).nombre + "-------**********" + nuevaListaEstadosAFN.ElementAt(i).listaTrancisiones.ElementAt(j).terminal);
                     //Console.WriteLine("-----****" + nuevaListaEstadosAFN.ElementAt(i).listaTrancisiones.ElementAt(j).NombreTrans + "-------**********");
@@ -527,7 +535,7 @@ namespace _OLC1_Proyecto1
             for (int i=0;i<listaTerminales.Count;i++)
             {
                 escribir.WriteLine("<TD>");
-                escribir.WriteLine(listaTerminales.ElementAt(i).lexema);
+                escribir.WriteLine("\""+listaTerminales.ElementAt(i).lexema+"\"");
                 escribir.WriteLine("</TD>\n");
 
             }

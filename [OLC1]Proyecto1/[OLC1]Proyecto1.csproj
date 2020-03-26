@@ -49,6 +49,8 @@
     <Compile Include="Afd.cs" />
     <Compile Include="AnalizadorLexico.cs" />
     <Compile Include="Cerradura.cs" />
+    <Compile Include="Conjunto.cs" />
+    <Compile Include="EjExpresionR.cs" />
     <Compile Include="ErroresLexicos.cs" />
     <Compile Include="Estados.cs" />
     <Compile Include="Form1.cs">

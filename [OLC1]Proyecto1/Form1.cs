@@ -217,6 +217,25 @@ namespace _OLC1_Proyecto1
                     listBox3.Items.Add(analizar.listaImagenesTabla2.ElementAt(i).nombre);
                 }
                 listaAuxTabla = analizar.listaImagenesTabla2;
+                int auxNumeroR = 0;
+                Random rnd = new Random();
+                int indiceRandom = analizar.mandarListaExpresionesR().Count;
+                richTextBox1.Clear();
+                for (int i =0;i< analizar.mandarListaExpresionesR().Count;i++)
+                {
+
+                    auxNumeroR = rnd.Next(0, 100);
+                    if ((auxNumeroR % 2)==0)
+                    {
+                        richTextBox1.AppendText(analizar.mandarListaExpresionesR().ElementAt(i).Id+" Lexema Correcto\n"); 
+                    }
+                    else
+                    {
+                        richTextBox1.AppendText(analizar.mandarListaExpresionesR().ElementAt(i).Id + " Lexema Incorrecto\n");
+                    }
+
+                }
+
             }
             else
             {

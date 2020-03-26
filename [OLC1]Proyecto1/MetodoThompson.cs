@@ -22,7 +22,7 @@ namespace _OLC1_Proyecto1
         List<Imagen> listaImagenesAfd3 = new List<Imagen>();
         List<Imagen> listaImagenesTabla3 = new List<Imagen>();
         int IndiceAFNAUX = 0;
-
+        LinkedList<Estados> listaEstadosAFD = new LinkedList<Estados>();
 
         //LinkedList<Estados> listaEstadosCerradura = new LinkedList<Estados>();
 
@@ -331,11 +331,18 @@ namespace _OLC1_Proyecto1
             }
 
             Afd nuevoAfd = new Afd(listaTerminales,cerraduras,listaEstados,IndiceAFNAUX);
+            listaEstadosAFD = nuevoAfd.obtenerListaAFD();
             listaImagenesAfd3 = nuevoAfd.crearImagen();
             listaImagenesTabla3 = nuevoAfd.crearImagenTabla();
 
+
         }
-        
+
+        public LinkedList<Estados> MandarListaAFD()
+        {
+            return listaEstadosAFD;
+        }
+
 
         public List<int> GenerarCerradura(Estados aux, List<int> lista)
         {
@@ -389,7 +396,7 @@ namespace _OLC1_Proyecto1
                 {
                     texto = texto + "X" + listaEstados.ElementAt(i).indiceEstado + "-> X" 
                         + listaEstados.ElementAt(i).listaTrancisiones.ElementAt(j).estadoSiguiete.indiceEstado +
-                        "[label=\"" + listaEstados.ElementAt(i).listaTrancisiones.ElementAt(j).estadoSiguiete.nombre+ "\"];\n";
+                        "[label=\"" + "["+ "\\" + listaEstados.ElementAt(i).listaTrancisiones.ElementAt(j).estadoSiguiete.nombre+ "]"+ "\"];\n";
 
                 }
             }
