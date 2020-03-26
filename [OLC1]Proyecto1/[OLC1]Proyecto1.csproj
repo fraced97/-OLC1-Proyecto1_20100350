@@ -70,6 +70,12 @@
     <Compile Include="VentanaImagenes.Designer.cs">
       <DependentUpon>VentanaImagenes.cs</DependentUpon>
     </Compile>
+    <Compile Include="VentanaTabla.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VentanaTabla.Designer.cs">
+      <DependentUpon>VentanaTabla.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -84,6 +90,9 @@
     </Compile>
     <EmbeddedResource Include="VentanaImagenes.resx">
       <DependentUpon>VentanaImagenes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VentanaTabla.resx">
+      <DependentUpon>VentanaTabla.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

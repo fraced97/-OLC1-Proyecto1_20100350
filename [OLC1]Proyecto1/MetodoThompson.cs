@@ -20,6 +20,7 @@ namespace _OLC1_Proyecto1
          LinkedList<TokenER>listaTerminales=new LinkedList<TokenER>();
          public static List<Imagen> listaImagenesThompson = new List<Imagen>();
         List<Imagen> listaImagenesAfd3 = new List<Imagen>();
+        List<Imagen> listaImagenesTabla3 = new List<Imagen>();
         int IndiceAFNAUX = 0;
 
 
@@ -46,6 +47,14 @@ namespace _OLC1_Proyecto1
         {
             List<Imagen> listaImagenesaux = new List<Imagen>();
             listaImagenesaux = listaImagenesAfd3;
+
+
+            return listaImagenesaux;
+        }
+        public List<Imagen> crearImagenTabla()
+        {
+            List<Imagen> listaImagenesaux = new List<Imagen>();
+            listaImagenesaux = listaImagenesTabla3;
 
 
             return listaImagenesaux;
@@ -103,22 +112,22 @@ namespace _OLC1_Proyecto1
         public void ordenarTransicionesMA(Estados estado0, Estados estado1, Estados estado2, Estados estado3)
         {
             
-            crearEstado(estado0).agregart("ε", estado1,1);
-            crearEstado(estado1).agregart("1919", estado2,1);
-            crearEstado(estado2).agregart("ε", estado3,1);
-            crearEstado(estado2).agregart("ε", estado1,2);
-            crearEstado(estado0).agregart("ε", estado3,2);
+                                crearEstado(estado0).agregart("ε", estado1,1);
+                    crearEstado(estado1).agregart("1919", estado2,1);
+                                        crearEstado(estado2).agregart("ε", estado3,1);
+                                crearEstado(estado2).agregart("ε", estado1,2);
+                        crearEstado(estado0).agregart("ε", estado3,2);
            
             
         }
         public void ordenarTransicionesOI(Estados estado0, Estados estado1, Estados estado2, Estados estado3, Estados estado4, Estados estado5)
         {
-            crearEstado(estado0).agregart("ε", estado1,1);
-            crearEstado(estado0).agregart("ε", estado2,2);
-            crearEstado(estado1).agregart("2000", estado3,1);
-            crearEstado(estado2).agregart("88888", estado4,1);
-            crearEstado(estado3).agregart("ε", estado5,1);
-            crearEstado(estado4).agregart("ε", estado5,1);
+                             crearEstado(estado0).agregart("ε", estado1,1);
+                crearEstado(estado0).agregart("ε", estado2,2);
+                        crearEstado(estado1).agregart("2000", estado3,1);
+                     crearEstado(estado2).agregart("88888", estado4,1);
+                                crearEstado(estado3).agregart("ε", estado5,1);
+                                        crearEstado(estado4).agregart("ε", estado5,1);
           
         }
 
@@ -156,27 +165,27 @@ namespace _OLC1_Proyecto1
             
             switch (copiaLista.ElementAt(indice).tipo)
             {
-                case TokenER.TipoER.CADENA:
-                    estado = new Estados();
-                    estado.indiceEstado = indiceAfn;
-                    estado.nombre = copiaLista.ElementAt(indice).lexema;
-                    if (terminalExiste(copiaLista.ElementAt(indice).lexema))
-                    {
-                        listaTerminales.AddLast(copiaLista.ElementAt(indice));
-                    }
+                            case TokenER.TipoER.CADENA:
+                                     estado = new Estados();
+                                estado.indiceEstado = indiceAfn;
+                                 estado.nombre = copiaLista.ElementAt(indice).lexema;
+                             if (terminalExiste(copiaLista.ElementAt(indice).lexema))
+                             {
+                                 listaTerminales.AddLast(copiaLista.ElementAt(indice));
+                             }
                    // if (indice<copiaLista.Count)
                     //{
-                        indice++;
+                                        indice++;
                     //}
                     //else
                    // {
                       //  break;
                     //}
                     
-                    indiceAfn++;
+                                indiceAfn++;
                     break;
 
-                case TokenER.TipoER.ASTERISCO:
+                            case TokenER.TipoER.ASTERISCO:
                     //if (indice < copiaLista.Count)
                     //{
                         indice++;
@@ -185,87 +194,87 @@ namespace _OLC1_Proyecto1
                    // {
                         //break;
                     //}
-                    estado1 = new Estados("ε", indiceAfn++);
-                    estado2 = metodoThompson(estado1);
-                    estado3 = new Estados("ε",indiceAfn++);
-                    ordenarTransicionesMA(estado,estado1,estado2,estado3);
-                    estado = estado3;
-                    break;
-                case TokenER.TipoER.IDENTIFICADOR:
+                         estado1 = new Estados("ε", indiceAfn++);
+                                estado2 = metodoThompson(estado1);
+                                estado3 = new Estados("ε",indiceAfn++);
+                                    ordenarTransicionesMA(estado,estado1,estado2,estado3);
+                                estado = estado3;
+                        break;
+                                case TokenER.TipoER.IDENTIFICADOR:
 
-                    estado = new Estados();
-                    estado.indiceEstado = indiceAfn;
-                    estado.nombre = copiaLista.ElementAt(indice).lexema;
-                    if (terminalExiste(copiaLista.ElementAt(indice).lexema))
-                    {
-                        listaTerminales.AddLast(copiaLista.ElementAt(indice));
-                    }
+                             estado = new Estados();
+                         estado.indiceEstado = indiceAfn;
+                                 estado.nombre = copiaLista.ElementAt(indice).lexema;
+                                        if (terminalExiste(copiaLista.ElementAt(indice).lexema))
+                            {
+                                     listaTerminales.AddLast(copiaLista.ElementAt(indice));
+                                }
                     //if (indice < copiaLista.Count)
                     //{
-                        indice++;
+                                     indice++;
                     //}
                     //else
                     //{
                    //     break;
                    // }
-                    indiceAfn++;
+                                     indiceAfn++;
 
                     break;
-                case TokenER.TipoER.PUNTO:
+                            case TokenER.TipoER.PUNTO:
                    // if (indice < copiaLista.Count)
                    // {
-                        indice++;
+                              indice++;
                    // }
                    // else
                    // {
                     //    break;
                     //}
-                    estado1 = metodoThompson(estado);
-                    crearEstado(estado).agregart(estado1.nombre, estado1,1);
-                    estado2 = metodoThompson(estado1);
-                    crearEstado(estado1).agregart(estado2.nombre, estado2,1);
-                    estado = estado2;
+                                        estado1 = metodoThompson(estado);
+                                crearEstado(estado).agregart(estado1.nombre, estado1,1);
+                                    estado2 = metodoThompson(estado1);
+                         crearEstado(estado1).agregart(estado2.nombre, estado2,1);
+                                            estado = estado2;
 
 
                     break;
-                case TokenER.TipoER.INTERROGACION:
+                                case TokenER.TipoER.INTERROGACION:
                     //if (indice < copiaLista.Count)
                     //{
-                        indice++;
+                              indice++;
                     //}
                     //else
                     //{
                     //    break;
                     //}
-                    estado1 = new Estados("ε", indiceAfn++);
-                    estado3 = metodoThompson(estado1);
+                                 estado1 = new Estados("ε", indiceAfn++);
+                         estado3 = metodoThompson(estado1);
                     estado2 = new Estados("ε", indiceAfn++);
-                    estado4 = new Estados("ε", indiceAfn++);
-                    estado5 = new Estados("ε", indiceAfn++);
-                    ordenarTransicionesOI(estado, estado1, estado2, estado3, estado4, estado5);
-                    estado = estado5;
-                    break;
+                                     estado4 = new Estados("ε", indiceAfn++);
+                         estado5 = new Estados("ε", indiceAfn++);
+                                        ordenarTransicionesOI(estado, estado1, estado2, estado3, estado4, estado5);
+                     estado = estado5;
+                             break;
 
 
                     
-                case TokenER.TipoER.OR:
+                         case TokenER.TipoER.OR:
                     //if (indice < copiaLista.Count)
                     //{
-                        indice++;
+                               indice++;
                     //}
                     //else
                     //{
                     //    break;
                     //}
-                    estado1 = new Estados("ε", indiceAfn++);
-                    estado3 = metodoThompson(estado1);
-                    estado2= new Estados("ε", indiceAfn++);
-                    estado4 = metodoThompson(estado2);
-                    estado5= new Estados("ε", indiceAfn++);
-                    ordenarTransicionesOI(estado, estado1, estado2, estado3, estado4, estado5);
-                    estado = estado5;
-                    break;
-                case TokenER.TipoER.MAS:
+                               estado1 = new Estados("ε", indiceAfn++);
+                      estado3 = metodoThompson(estado1);
+                                       estado2= new Estados("ε", indiceAfn++);
+                          estado4 = metodoThompson(estado2);
+                                 estado5= new Estados("ε", indiceAfn++);
+                                        ordenarTransicionesOI(estado, estado1, estado2, estado3, estado4, estado5);
+                             estado = estado5;
+                             break;
+                            case TokenER.TipoER.MAS:
                    // if (indice < copiaLista.Count)
                    // {
                         indice++;
@@ -274,16 +283,16 @@ namespace _OLC1_Proyecto1
                    // {
                       //  break;
                     //}
-                    int tmp = indice;
-                    estado1 = metodoThompson(estado);
-                    indice = tmp;
-                    crearEstado(estado).agregart(estado1.nombre, estado1,1);
-                    estado2 = new Estados("ε",indiceAfn++);
-                    estado3 = metodoThompson(estado2);
-                    estado4 = new Estados("ε", indiceAfn++);
-                    ordenarTransicionesMA(estado1,estado2,estado3,estado4);
-                    estado = estado4;
-                    break;
+                             int tmp = indice;
+                        estado1 = metodoThompson(estado);
+                                 indice = tmp;
+                         crearEstado(estado).agregart(estado1.nombre, estado1,1);
+                                             estado2 = new Estados("ε",indiceAfn++);
+                                    estado3 = metodoThompson(estado2);
+                     estado4 = new Estados("ε", indiceAfn++);
+                                        ordenarTransicionesMA(estado1,estado2,estado3,estado4);
+                        estado = estado4;
+                                break;
 
             }
 
@@ -323,20 +332,10 @@ namespace _OLC1_Proyecto1
 
             Afd nuevoAfd = new Afd(listaTerminales,cerraduras,listaEstados,IndiceAFNAUX);
             listaImagenesAfd3 = nuevoAfd.crearImagen();
+            listaImagenesTabla3 = nuevoAfd.crearImagenTabla();
 
         }
-        public void Letras()
-        {
-            char letra = 'A';
-
-            while (letra <= 'Z')
-            {
-                Console.WriteLine("-" + letra);
-
-                letra++;
-
-            }
-        }
+        
 
         public List<int> GenerarCerradura(Estados aux, List<int> lista)
         {

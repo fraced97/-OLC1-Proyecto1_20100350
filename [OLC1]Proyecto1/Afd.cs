@@ -12,7 +12,9 @@ namespace _OLC1_Proyecto1
     class Afd
     {
         String texto = "";
+        String textoTabla = "";
         static int indiceDot=0;
+        static int indiceDotTabla = 0;
         int IndiceEstadoAFN = 0;
         public LinkedList<TokenER> listaTerminales = new LinkedList<TokenER>();
 
@@ -35,6 +37,7 @@ namespace _OLC1_Proyecto1
         int indiceEstadoNuevo = 0;
 
         public static List<Imagen> listaImagenesAFD = new List<Imagen>();
+        public static List<Imagen> listaImagenesTabla = new List<Imagen>();
 
 
         public Afd(LinkedList<TokenER> listaTerminales, LinkedList<Cerradura> listacerraduras, LinkedList<Estados> estadosThompson, int IndiceEstadoAfn)
@@ -47,6 +50,7 @@ namespace _OLC1_Proyecto1
             crearEstadoInicial();
             crearNuevoEstado2();
             graficarAFD();
+            crearTabla();
 
         }
         public void crearEstadoInicial()
@@ -310,7 +314,7 @@ namespace _OLC1_Proyecto1
                 {
                     //
                    // if(nuevaListaEstadosAFN.ElementAt(i).arregloEnteros.Equals(arregloEnterosAux))
-                    if (CompareLists(nuevaListaEstadosAFN.ElementAt(i).arregloEnteros, arregloEnterosAux))
+                    if (CompararLista(nuevaListaEstadosAFN.ElementAt(i).arregloEnteros, arregloEnterosAux))
                     {
                         //indiceEstadoNuevo++;
                         //nuevaListaEstadosAFN.AddLast(new Estados(indiceEstadoNuevo.ToString(), arregloEnterosAux));
@@ -436,40 +440,182 @@ namespace _OLC1_Proyecto1
             return listaImagenesaux;
         }
 
-        public static bool CompareLists<T>(List<T> aListA, List<T> aListB)
+        public List<Imagen> crearImagenTabla()
         {
-            if (aListA == null || aListB == null || aListA.Count != aListB.Count)
+            List<Imagen> listaImagenesaux = new List<Imagen>();
+            listaImagenesaux = listaImagenesTabla;
+
+
+            return listaImagenesaux;
+        }
+
+
+        public void crearTabla2()
+        {
+            textoTabla = "";
+            
+            for (int i = 0; i < nuevaListaEstadosAFN.Count; i++)
+            {
+                
+                for (int j = 0; j < nuevaListaEstadosAFN.ElementAt(i).listaTrancisiones.Count; j++)
+                {
+                    textoTabla = textoTabla + "<TR>  ";
+                    textoTabla = textoTabla + "<TD>" + "X" + nuevaListaEstadosAFN.ElementAt(i).nombre + "</TD>";
+                    for (int k=0; k<listaTerminales.Count;k++)
+                    {
+                        if (nuevaListaEstadosAFN.ElementAt(i).listaTrancisiones.ElementAt(j).NombreTrans.Equals(listaTerminales.ElementAt(k).lexema))
+                        {
+                            textoTabla = textoTabla + "<TD>" + "X"+ nuevaListaEstadosAFN.ElementAt(i).listaTrancisiones.ElementAt(j).terminal + "</TD>\n";
+                        }
+                        else
+                        {
+                            textoTabla = textoTabla + "<TD>" + "  " + "</TD>";
+                        }
+
+                        
+
+                    }
+
+                    textoTabla = textoTabla + "</TR>";
+                    // + nuevaListaEstadosAFN.ElementAt(i).listaTrancisiones.ElementAt(j).terminal ;
+                    //estadosThompson.ElementAt(0).listaTrancisiones.AddLast(new Trancisiones());
+                    //Console.WriteLine("-----****" + nuevaListaEstadosAFN.ElementAt(i).nombre + "-------**********" + nuevaListaEstadosAFN.ElementAt(i).listaTrancisiones.ElementAt(j).terminal);
+                    //Console.WriteLine("-----****" + nuevaListaEstadosAFN.ElementAt(i).listaTrancisiones.ElementAt(j).NombreTrans + "-------**********");
+                }
+
+                //textoTabla = textoTabla + "</TR>";
+
+
+            }
+        }
+
+        public void crearTabla()
+        {
+            indiceDotTabla++;
+            TextWriter escribir;
+            String ruta = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Tabla" + "\\" + "Tabla" + indiceDotTabla.ToString() + ".dot";
+            String ruta2 = Application.StartupPath + "\\Tabla" + "\\" + "Tabla" + indiceDotTabla.ToString() + ".dot";
+            String ruta4 = Application.StartupPath + @"\Tabla";
+
+            try
+            {
+                if (Directory.Exists(ruta4))
+                {
+                    MessageBox.Show("Carpeta Existe");
+                }
+                else
+                {
+                    MessageBox.Show("Carpeta No Existe, Creando....");
+                    Directory.CreateDirectory(ruta4);
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+            escribir = new StreamWriter(ruta2);
+            //escribir.WriteLine("digraph G {\n");
+            //escribir.WriteLine("rankdir=LR;");
+            escribir.WriteLine("digraph G {\n"
+                    + "    graph [ratio=fill];\n"
+                    + "    node [label=\"\\N\", fontsize=20, shape=plaintext];\n"
+                    + "    arset [label=<\n"
+                    + "        <TABLE ALIGN=\"LEFT\">\n");
+            escribir.WriteLine("<TR>\n");
+            //escribir.WriteLine("<TD>Indice</TD>\n");
+            escribir.WriteLine("<TD>Estado</TD>\n");
+            for (int i=0;i<listaTerminales.Count;i++)
+            {
+                escribir.WriteLine("<TD>");
+                escribir.WriteLine(listaTerminales.ElementAt(i).lexema);
+                escribir.WriteLine("</TD>\n");
+
+            }
+            escribir.WriteLine("</TR>");
+
+            crearTabla2();
+
+
+
+            escribir.WriteLine(textoTabla);
+
+            escribir.WriteLine(" </TABLE>\n"+ "    >, ];\n");
+
+
+            /*for (int i = 0; i < nuevaListaEstadosAFN.Count; i++)
+            {
+                for (int j = 0; j < nuevaListaEstadosAFN.ElementAt(i).arregloEnteros.Count; j++)
+                {
+                    if (nuevaListaEstadosAFN.ElementAt(i).arregloEnteros[j] == IndiceEstadoAFN)
+                    {
+                        escribir.WriteLine("node[shape = \"doublecircle\"]" + "X" + nuevaListaEstadosAFN.ElementAt(i).nombre + ";");
+                    }
+
+                }
+            }*/
+            //escribir.WriteLine("node[shape = \"doublecircle\"]" + "X" + (indiceAfn - 1) + ";");
+            //escribir.WriteLine("node[shape=\"circle\"];");
+            
+            escribir.WriteLine("}");
+            escribir.Close();
+
+            String rutaImagen = Application.StartupPath + "//Tabla" + "//" + "TablaImagen" + indiceDotTabla.ToString() + ".jpg";
+            String rutaDot = Application.StartupPath + "//Tabla" + "//" + "Tabla" + indiceDotTabla.ToString() + ".dot";
+            listaImagenesTabla.Add(new Imagen("TablaImagen" + indiceDotTabla.ToString() + ".jpg", rutaImagen));
+            Process process = new Process();
+            process.StartInfo.FileName = "cmd.exe";
+            process.StartInfo.CreateNoWindow = true;
+            process.StartInfo.RedirectStandardInput = true;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.UseShellExecute = false;
+            process.Start();
+            process.StandardInput.WriteLine("dot -Tjpg " + rutaDot + " -o " + rutaImagen);
+            process.StandardInput.Flush();
+            process.StandardInput.Close();
+            process.WaitForExit();
+            Console.WriteLine(process.StandardOutput.ReadToEnd());
+
+
+
+
+
+        }
+
+
+        public static bool CompararLista<T>(List<T> Lista1, List<T> Lista2)
+        {
+            if (Lista1 == null || Lista2 == null || Lista1.Count != Lista2.Count)
                 return false;
-            if (aListA.Count == 0)
+            if (Lista1.Count == 0)
                 return true;
-            Dictionary<T, int> lookUp = new Dictionary<T, int>();
-            // create index for the first list
-            for (int i = 0; i < aListA.Count; i++)
+            Dictionary<T, int> dictionario = new Dictionary<T, int>();
+            
+            for (int i = 0; i < Lista1.Count; i++)
             {
                 int count = 0;
-                if (!lookUp.TryGetValue(aListA[i], out count))
+                if (!dictionario.TryGetValue(Lista1[i], out count))
                 {
-                    lookUp.Add(aListA[i], 1);
+                    dictionario.Add(Lista1[i], 1);
                     continue;
                 }
-                lookUp[aListA[i]] = count + 1;
+                dictionario[Lista1[i]] = count + 1;
             }
-            for (int i = 0; i < aListB.Count; i++)
+            for (int i = 0; i < Lista2.Count; i++)
             {
                 int count = 0;
-                if (!lookUp.TryGetValue(aListB[i], out count))
+                if (!dictionario.TryGetValue(Lista2[i], out count))
                 {
-                    // early exit as the current value in B doesn't exist in the lookUp (and not in ListA)
+                 
                     return false;
                 }
                 count--;
                 if (count <= 0)
-                    lookUp.Remove(aListB[i]);
+                    dictionario.Remove(Lista2[i]);
                 else
-                    lookUp[aListB[i]] = count;
+                    dictionario[Lista2[i]] = count;
             }
-            // if there are remaining elements in the lookUp, that means ListA contains elements that do not exist in ListB
-            return lookUp.Count == 0;
+           
+            return dictionario.Count == 0;
         }
 
 

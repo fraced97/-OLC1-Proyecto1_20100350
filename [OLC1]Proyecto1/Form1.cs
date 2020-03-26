@@ -18,6 +18,7 @@ namespace _OLC1_Proyecto1
         OpenFileDialog seleccionar = new OpenFileDialog();
         List<Imagen> listaAuxT = new List<Imagen>();
         List<Imagen> listaAuxAfd = new List<Imagen>();
+        List<Imagen> listaAuxTabla = new List<Imagen>();
 
 
         /*{
@@ -194,10 +195,10 @@ namespace _OLC1_Proyecto1
                 String documento = texto.Text;
                 analizar.Analizar(documento);
                 analizar.AnalizarER();
-                //analizar.reporteHtml();
-                //analizar.ReporteErrores();
-                //analizar.reporteTokensXML();
-                //analizar.reporteErroresXML();
+                analizar.reporteHtml();
+                analizar.ReporteErrores();
+                analizar.reporteTokensXML();
+                analizar.reporteErroresXML();
                 listBox1.Items.Clear();
                 for (int i=0;i<analizar.listaImagenesThompson2.Count;i++)
                 {
@@ -210,7 +211,12 @@ namespace _OLC1_Proyecto1
                     listBox2.Items.Add(analizar.listaImagenesAfd2.ElementAt(i).nombre);
                 }
                 listaAuxAfd = analizar.listaImagenesAfd2;
-
+                listBox3.Items.Clear();
+                for (int i = 0; i < analizar.listaImagenesTabla2.Count; i++)
+                {
+                    listBox3.Items.Add(analizar.listaImagenesTabla2.ElementAt(i).nombre);
+                }
+                listaAuxTabla = analizar.listaImagenesTabla2;
             }
             else
             {
@@ -256,6 +262,21 @@ namespace _OLC1_Proyecto1
                 {
                     VentanaImagenes imagenT = new VentanaImagenes();
                     imagenT.aux = listaAuxAfd.ElementAt(i).rutaImagen;
+                    imagenT.crearImagen();
+                    imagenT.Show();
+                }
+
+            }
+        }
+
+        private void listBox3_DoubleClick(object sender, EventArgs e)
+        {
+            for (int i = 0; i < listaAuxTabla.Count; i++)
+            {
+                if (listBox3.SelectedItem.ToString().Equals(listaAuxTabla.ElementAt(i).nombre))
+                {
+                    VentanaTabla imagenT = new VentanaTabla();
+                    imagenT.aux = listaAuxTabla.ElementAt(i).rutaImagen;
                     imagenT.crearImagen();
                     imagenT.Show();
                 }
