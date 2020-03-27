@@ -505,7 +505,7 @@ namespace _OLC1_Proyecto1
                                     MetodoThompson metodoT = new MetodoThompson(listaTokenER);
 
                                     //listaEstadosAFD = metodoT.MandarListaAFD();
-                                   /* for (int p = 0; p < listaIdExpresionR.Count; p++)
+                                    for (int p = 0; p < listaIdExpresionR.Count; p++)
                                     {
                                         if (IdUtilizar.Equals(listaIdExpresionR.ElementAt(p).Id))
                                         {
@@ -514,8 +514,8 @@ namespace _OLC1_Proyecto1
                                            // listaIdExpresionR.ElementAt(p).listaEstadosAfd = metodoT.MandarListaAFD();
                                         }
                                         
-                                    }*/
-                                    //VerificarLexema();
+                                    }
+                                    VerificarLexema();
                                     listaImagenesThompson2 = metodoT.crearImagen();
                                     listaImagenesAfd2 = metodoT.crearImagenAfd();
                                     listaImagenesTabla2 = metodoT.crearImagenTabla();
