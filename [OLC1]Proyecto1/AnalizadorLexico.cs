@@ -17,14 +17,9 @@ namespace _OLC1_Proyecto1
         LinkedList<TokenER> listaTokenER = new LinkedList<TokenER>();
         //LinkedList<LinkedList<Trancisiones>> listaEstados = new LinkedList<LinkedList<Trancisiones>>();
        // LinkedList<Estados> listaEstados = new LinkedList<Estados>();
-        /// <summary>
-        /// ///////////////////
-        /// </summary>
+        
         int indice = 0;
-        /// <summary>
-        /// //////////////////////
-        /// </summary>
-        /// 
+         
         public List<Imagen> listaImagenesThompson2 = new List<Imagen>();
         public List<Imagen> listaImagenesAfd2 = new List<Imagen>();
         public List<Imagen> listaImagenesTabla2 = new List<Imagen>();
